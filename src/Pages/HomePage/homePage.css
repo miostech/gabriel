@@ -1,0 +1,16 @@
+.home_page_container {
+  margin: 1vh;
+}
+.home_page_box {
+  margin-top: 20vh;
+  display: flex;
+  justify-content: center;
+}
+.home_page_content {
+}
+.home_page_content input{
+    opacity: 0.3;
+}
+.home_page_title {
+  text-align: center;
+}

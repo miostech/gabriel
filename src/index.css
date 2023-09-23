@@ -1,0 +1,22 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 5vh;
+  border: 10px double #5f021f;
+  height: 90vh;
+  background: #9e9170;
+  background-image: url("2244.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@font-face {
+  font-family: Mooli;
+  src: url(Font/Mooli-Regular.ttf);
+}

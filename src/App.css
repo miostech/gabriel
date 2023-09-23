@@ -1,0 +1,37 @@
+.body_main {
+  height: 100%;
+  font-family: Mooli;
+}
+.img1 {
+  object-fit: contain;
+  z-index: 1;
+  position: absolute;
+  height: 30vh;
+  bottom: 0;
+  left: 0;
+}
+.img2 {
+  object-fit: contain;
+  position: absolute;
+  height: 30vh;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  transform: rotate(180deg);
+}
+.button {
+  background-color: #5f021f;
+  border-radius: 20px;
+  z-index: 2;
+  font-family: Mooli;
+}
+@media only screen and (min-width: 360px) and (max-width: 600px) {
+  /* For phones: */
+
+  #root {
+    overflow: hidden;
+  }
+  .img1 {
+    bottom: -6vh;
+  }
+}
