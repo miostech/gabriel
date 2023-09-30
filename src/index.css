@@ -16,6 +16,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 @font-face {
   font-family: Mooli;
   src: url(Font/Mooli-Regular.ttf);

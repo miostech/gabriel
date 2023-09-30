@@ -1,12 +1,9 @@
 import "./loginPage.css";
-import { Button, Form, Input, Select } from "antd";
+import { Button, ConfigProvider, Form, Input, Select } from "antd";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dbData from "./db.json";
-
-
-
 
 export default function LoginPage() {
   const [data, setData] = useState([]);
@@ -39,12 +36,6 @@ export default function LoginPage() {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item label="Quem está a logar?" name="whoIs">
-          <Select>
-            <Select.Option value="Gabriel">Gabriel</Select.Option>
-            <Select.Option value="Sara">Sara</Select.Option>
-          </Select>
-        </Form.Item>
         <Form.Item
           label="Email"
           name="email"
@@ -78,9 +69,11 @@ export default function LoginPage() {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit" className="button">
-            Entrar
-          </Button>
+          <ConfigProvider theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}>
+            <Button type="primary" htmlType="submit" className="button">
+              Entrar
+            </Button>
+          </ConfigProvider>
         </Form.Item>
       </Form>
     </div>

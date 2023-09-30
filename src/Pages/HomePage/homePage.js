@@ -1,5 +1,5 @@
 import "./homePage.css";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
@@ -11,11 +11,28 @@ export default function Home() {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  function validatePhoneNumber(rule, value, callback) {
+    const cleanedValue = value.replace(/\D/g, '');
+    if (cleanedValue.length === 9) {
+
+      const validPrefixes = ['91', '92', '93', '96'];
+      const prefix = cleanedValue.slice(0, 2);
+  
+      if (validPrefixes.includes(prefix)) {
+        callback();
+      } else {
+        callback('Please enter a valid Portuguese phone number.');
+      }
+    } else {
+      callback('Por favor insira o seu numero de telemóvel válido.');
+    }
+  }
   return (
     <div className="home_page_container">
       <div className="home_page_box">
         <div className="home_page_content">
-          <h1 className="home_page_title">Confime a sua presença</h1>
+          <h1 className="home_page_title">Confirme a sua presença</h1>
           <Form
             name="basic"
             labelCol={{
@@ -32,13 +49,16 @@ export default function Home() {
             autoComplete="off"
           >
             <Form.Item
-              label="Telefone"
+              label="Telemóvel"
               name="number"
               rules={[
                 {
                   required: true,
                   message:
                     "Por favor insira o seu numero de telemovel antes de continuar",
+                },
+                {
+                  validator: validatePhoneNumber,
                 },
               ]}
             >
@@ -50,9 +70,11 @@ export default function Home() {
                 span: 16,
               }}
             >
-              <Button type="primary" htmlType="submit" className="button">
-                Enviar Confirmação
-              </Button>
+              <ConfigProvider theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}>
+                <Button type="primary" htmlType="submit" className="button">
+                  Enviar Confirmação
+                </Button>
+              </ConfigProvider>
             </Form.Item>
           </Form>
         </div>
