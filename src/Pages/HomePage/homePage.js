@@ -22,7 +22,7 @@ export default function Home() {
       if (validPrefixes.includes(prefix)) {
         callback();
       } else {
-        callback('Please enter a valid Portuguese phone number.');
+        callback('Por favor inisra um numero de telemovel portugues');
       }
     } else {
       callback('Por favor insira o seu numero de telemóvel válido.');

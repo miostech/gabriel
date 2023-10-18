@@ -1,6 +1,6 @@
 import "./video.css"
 export default function VideoPage(){
     return(
-        <div>Video page</div>
+        <div className="videoContainer">Video page</div>
     )
 }

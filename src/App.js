@@ -11,8 +11,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/video-page" element={<VideoPage />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<VideoPage />} />
         </Routes>
       </BrowserRouter>
       <img src={Flower} className="img1" draggable={false} />
