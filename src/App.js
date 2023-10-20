@@ -5,6 +5,8 @@ import Flower from "./Images/red-flower-frame-png-pic-vector-clipart-228173.png"
 import VideoPage from "./Pages/VideoPage/video";
 import LoginPage from "./Pages/LoginPage/loginPage";
 import DataBaseProvider from "./database/teste";
+import GuestPage from "./Pages/GuestPage/guestPage";
+import CouplePage from "./Pages/CouplePage/couplePage";
 function App() {
   return (
     <div className="body_main">
@@ -14,6 +16,8 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<Home />} />
             <Route path="/video-page" element={<VideoPage />} />
+            <Route path="/guest-page" element={<GuestPage />} />
+            <Route path="/couple-page" element={<CouplePage />} />
           </Routes>
         </BrowserRouter>
       </DataBaseProvider>

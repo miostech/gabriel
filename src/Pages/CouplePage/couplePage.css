@@ -1,0 +1,23 @@
+.home_page_container {
+    margin: 1vh;
+  }
+  .home_page_box {
+    margin-top: 20vh;
+    display: flex;
+    justify-content: center;
+  }
+  .home_page_content{
+    display: flex;
+    flex-direction: column;
+  }
+  .home_page_content label{
+    font-weight: 700;
+  }
+  .home_page_content input{
+    background-image: url("/src/2244.jpg");
+    background-position: center;
+    border: 1px solid #5f021fd0;
+  }
+  .home_page_title {
+    text-align: center;
+  }

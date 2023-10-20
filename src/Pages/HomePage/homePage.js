@@ -15,41 +15,22 @@ import {
 } from "firebase/firestore";
 import { useEffect } from "react";
 
-
 export default function Home() {
-
   const {
-    adicionarUsuario,
-    deletarUsuario,
-    getAllUsers,
     getByPhoneNumber,
-    userByPhoneNumber
+    userByPhoneNumber,
   } = useDataBaseContext();
   useEffect(() => {
     if (userByPhoneNumber.length > 0) {
       console.log("InEffect", userByPhoneNumber);
-      navigate("/video-page"); 
+      localStorage.setItem("userData", JSON.stringify(userByPhoneNumber))
+      navigate("/video-page");
     }
-
   }, [userByPhoneNumber]);
   const navigate = useNavigate();
   const onFinish = (values) => {
-
-    
-
     console.log("Success:", values);
     getByPhoneNumber(values.number);
-    /* adicionarUsuario(
-      "joao",
-      "joao",
-      false,
-      "joao",
-      "joao",
-      "joao"
-    ) */
-
-
-
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -57,19 +38,18 @@ export default function Home() {
   };
 
   function validatePhoneNumber(rule, value, callback) {
-    const cleanedValue = value.replace(/\D/g, '');
+    const cleanedValue = value.replace(/\D/g, "");
     if (cleanedValue.length === 9) {
-
-      const validPrefixes = ['91', '92', '93', '96'];
+      const validPrefixes = ["91", "92", "93", "96"];
       const prefix = cleanedValue.slice(0, 2);
 
       if (validPrefixes.includes(prefix)) {
         callback();
       } else {
-        callback('Por favor inisra um numero de telemovel portugues');
+        callback("Por favor inisra um numero de telemovel portugues");
       }
     } else {
-      callback('Por favor insira o seu numero de telemóvel válido.');
+      callback("Por favor insira o seu numero de telemóvel válido.");
     }
   }
   return (
@@ -114,7 +94,9 @@ export default function Home() {
                 span: 16,
               }}
             >
-              <ConfigProvider theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}>
+              <ConfigProvider
+                theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}
+              >
                 <Button type="primary" htmlType="submit" className="button">
                   Enviar Confirmação
                 </Button>

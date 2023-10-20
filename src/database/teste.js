@@ -20,7 +20,7 @@ export default function DataBaseProvider({ children }) {
     const [usersAll, setUsersAll] = useState([]);
     const [userByPhoneNumber, setUserByPhoneNumber] = useState([]);
     const collectionRef = useMemo(() => collection(db, "users"), []);
-    const adicionarUsuario = async (
+    const addUser = async (
         description,
         greatings,
         isGoing,
@@ -45,7 +45,7 @@ export default function DataBaseProvider({ children }) {
         }
     };
 
-    const deletarUsuario = async (userId) => {
+    const deleteUser = async (userId) => {
 
         try {
             const docRef = doc(db, "users", userId);
@@ -88,13 +88,12 @@ export default function DataBaseProvider({ children }) {
         }
         
     }
-    // Get by phonenumber
 
     //Update User by id
 
     const contextBoxValues = {
-        adicionarUsuario,
-        deletarUsuario,
+        addUser,
+        deleteUser,
         getAllUsers,
         usersAll,
         getByPhoneNumber,
