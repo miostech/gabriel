@@ -1,11 +1,55 @@
 import "./homePage.css";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../index";
+import { useDataBaseContext } from "../../database/teste";
+import {
+  getDocs,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+import { useEffect } from "react";
+
+
 export default function Home() {
+
+  const {
+    adicionarUsuario,
+    deletarUsuario,
+    getAllUsers,
+    getByPhoneNumber,
+    userByPhoneNumber
+  } = useDataBaseContext();
+  useEffect(() => {
+    if (userByPhoneNumber.length > 0) {
+      console.log("InEffect", userByPhoneNumber);
+      navigate("/video-page"); 
+    }
+
+  }, [userByPhoneNumber]);
   const navigate = useNavigate();
   const onFinish = (values) => {
+
+    
+
     console.log("Success:", values);
-    navigate("/video-page");
+    getByPhoneNumber(values.number);
+    /* adicionarUsuario(
+      "joao",
+      "joao",
+      false,
+      "joao",
+      "joao",
+      "joao"
+    ) */
+
+
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -18,7 +62,7 @@ export default function Home() {
 
       const validPrefixes = ['91', '92', '93', '96'];
       const prefix = cleanedValue.slice(0, 2);
-  
+
       if (validPrefixes.includes(prefix)) {
         callback();
       } else {
