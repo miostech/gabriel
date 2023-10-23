@@ -16,15 +16,16 @@ import {
 import { useEffect } from "react";
 
 export default function Home() {
-  const {
-    getByPhoneNumber,
-    userByPhoneNumber,
-  } = useDataBaseContext();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const { getByPhoneNumber, userByPhoneNumber } = useDataBaseContext();
   useEffect(() => {
     if (userByPhoneNumber.length > 0) {
       console.log("InEffect", userByPhoneNumber);
-      localStorage.setItem("userData", JSON.stringify(userByPhoneNumber))
-      navigate("/video-page");
+      if (userData) {
+        navigate("/guest-page");
+      } else {
+        localStorage.setItem("userData", JSON.stringify(userByPhoneNumber));
+      }
     }
   }, [userByPhoneNumber]);
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ export default function Home() {
           >
             <Form.Item
               label="Telemóvel"
-              name="number"
+              name="phone"
               rules={[
                 {
                   required: true,

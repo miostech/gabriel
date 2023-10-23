@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Pages/HomePage/homePage";
 import Flower from "./Images/red-flower-frame-png-pic-vector-clipart-228173.png";
 import VideoPage from "./Pages/VideoPage/video";
@@ -14,8 +14,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/video-page" element={<VideoPage />} />
+            <Route path="/home-page" element={<Home />} />
+            <Route path="/" element={<VideoPage />} />
             <Route path="/guest-page" element={<GuestPage />} />
             <Route path="/couple-page" element={<CouplePage />} />
           </Routes>
