@@ -7,12 +7,14 @@ import LoginPage from "./Pages/LoginPage/loginPage";
 import DataBaseProvider from "./database/teste";
 import GuestPage from "./Pages/GuestPage/guestPage";
 import CouplePage from "./Pages/CouplePage/couplePage";
+import Testes from "./testes";
 function App() {
   return (
     <div className="body_main">
       <DataBaseProvider>
         <BrowserRouter>
           <Routes>
+          <Route path="/testes" element={<Testes/>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<Home />} />
             <Route path="/video-page" element={<VideoPage />} />

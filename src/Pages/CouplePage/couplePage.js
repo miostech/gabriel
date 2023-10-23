@@ -1,7 +1,13 @@
 import "./couplePage.css"
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
+import { useDataBaseContext } from "../../database/teste";
 export default function CouplePage() {
+  const { getAllUsers, usersAll } = useDataBaseContext();
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
   function onFinish(values) {
     console.log(values);
   }
@@ -53,7 +59,11 @@ export default function CouplePage() {
           </Form>
         </div>
         <div>
-            getAllUsers
+          {/* <div style={{ display: "flex", flexDirection: "column" , justifyContent: "center", alignItems: "center", gap: "10px", border: "1px solid black"}}>
+            {usersAll.map((user) => (
+              <div key={user.id}>{user.name + " " + user.phone}</div>
+            ))}
+          </div> */}
         </div>
       </div>
     </>
