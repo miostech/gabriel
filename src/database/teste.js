@@ -1,4 +1,4 @@
-import { db } from "../index";
+import { db, auth } from "../index";
 import {
   getDocs,
   collection,
@@ -9,6 +9,10 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 import { createContext, useContext, useState } from "react";
 
@@ -18,7 +22,9 @@ export const useDataBaseContext = () => useContext(DataBaseContext);
 export default function DataBaseProvider({ children }) {
   const [usersAll, setUsersAll] = useState([]);
   const [userByPhoneNumber, setUserByPhoneNumber] = useState([]);
+  const [error, setError] = useState("");
   const collectionRef = collection(db, "users");
+
   const addUser = async (description, greatings, name, phone) => {
     try {
       const docRef = await addDoc(collectionRef, {
@@ -79,6 +85,22 @@ export default function DataBaseProvider({ children }) {
       console.error("Erro ao buscar os usuários:", error);
     }
   };
+  const signIn = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log(auth.currentUser.email);
+      if (auth) {
+        let userLogedIn = {
+          uuid: auth.currentUser.uid,
+          email: auth.currentUser.email,
+        };
+        localStorage.setItem("coupleData", JSON.stringify(userLogedIn));
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Password ou email errado")
+    }
+  };
 
   //Update User by id
 
@@ -89,6 +111,9 @@ export default function DataBaseProvider({ children }) {
     usersAll,
     getByPhoneNumber,
     userByPhoneNumber,
+    signIn,
+    error,
+    setError
   };
 
   return (

@@ -2,28 +2,16 @@ import "./couplePage.css";
 import React, { useEffect } from "react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import { useDataBaseContext } from "../../database/teste";
-import { db } from "../../index";
-import {
-  getDocs,
-  collection,
-  addDoc,
-  deleteDoc,
-  doc,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
 
-import { useState } from "react";
 export default function CouplePage() {
-  const [users, setUsersAll] = useState([]);
   const { addUser, usersAll, getAllUsers } = useDataBaseContext();
-  const collectionRef = collection(db, "users");
   useEffect(() => {
     getAllUsers();
   }, []);
   function onFinish(values) {
     console.log(values);
+    addUser(values.description, values.greatings, values.name, values.phone);
+    getAllUsers();
   }
   function onFinishFailed(values) {
     console.log(values);
@@ -46,8 +34,8 @@ export default function CouplePage() {
   return (
     <>
       <h2>Vamos convidar os nossos convidados!</h2>
-      <div className="home_page_box">
-        <div className="home_page_content">
+      <div className="couple_page_box">
+        <div className="couple_page_content">
           <Form
             name="basic"
             layout="vertical"
@@ -126,21 +114,15 @@ export default function CouplePage() {
           </Form>
         </div>
         <div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "10px",
-              border: "1px solid black",
-            }}
-          >
-            {usersAll.map((user) => (
-              <div key={user.id}>
-                <div>{user.name}</div>
-              </div>
-            ))}
+          <div>
+            <h1>Convidados</h1>
+            <div>
+              {usersAll.map((user) => (
+                <div key={user.id}>
+                  <div>{user.name}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

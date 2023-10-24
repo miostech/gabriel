@@ -1,20 +1,22 @@
 import "./loginPage.css";
 import { Button, ConfigProvider, Form, Input, Select } from "antd";
-
+import { useDataBaseContext } from "../../database/teste";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import dbData from "./db.json";
 
 export default function LoginPage() {
   const [data, setData] = useState([]);
-
+  const { signIn, error, setError } = useDataBaseContext();
   const navigate = useNavigate();
+  const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
   useEffect(() => {
-    // Fetch data from the JSON file using the fetch API
-    console.log(dbData);
-  }, []);
+    if (loggedIn) {
+      navigate("/couple-page");
+    }
+  }, [loggedIn]);
   const onSuccess = (values) => {
     console.log("Success:", values);
+    signIn(values.email, values.password);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -33,6 +35,7 @@ export default function LoginPage() {
           maxWidth: 600,
         }}
         onFinish={onSuccess}
+        onChange={() => setError("")}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
@@ -76,6 +79,12 @@ export default function LoginPage() {
           </ConfigProvider>
         </Form.Item>
       </Form>
+      {error && (
+        <>
+          <h3>Erro ao logar</h3>
+          <div>{error}</div>
+        </>
+      )}
     </div>
   );
 }
