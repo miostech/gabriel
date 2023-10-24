@@ -16,7 +16,7 @@ import {
 
 import { useState } from "react";
 export default function CouplePage() {
-  const[users, setUsersAll] = useState([])
+  const [users, setUsersAll] = useState([]);
   const { addUser, usersAll, getAllUsers } = useDataBaseContext();
   const collectionRef = collection(db, "users");
   useEffect(() => {
@@ -126,11 +126,22 @@ export default function CouplePage() {
           </Form>
         </div>
         <div>
-          {usersAll.map((user) => {
-            <div key={user.id}>
-              <text>{user.phone}</text>
-            </div>;
-          })}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "10px",
+              border: "1px solid black",
+            }}
+          >
+            {usersAll.map((user) => (
+              <div key={user.id}>
+                <div>{user.name}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
