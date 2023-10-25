@@ -1,11 +1,45 @@
 import "./homePage.css";
-import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
+import { Button, Checkbox, ConfigProvider, Form, Input, Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../index";
+import { useDataBaseContext } from "../../database/teste";
+import {
+  getDocs,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 export default function Home() {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const { getByPhoneNumber, userByPhoneNumber, updateGuest } =
+    useDataBaseContext();
+  const [isGoing, setIsGoing] = useState(null);
+  useEffect(() => {
+    if (userData) {
+      navigate("/guest-page");
+    } else if (userByPhoneNumber.length > 0) {
+      console.log("InEffect", userByPhoneNumber);
+      console.log(isGoing);
+      updateGuest(userByPhoneNumber[0].id, isGoing);
+      if (userData) {
+        navigate("/guest-page");
+      } else {
+        localStorage.setItem("userData", JSON.stringify(userByPhoneNumber[0]));
+        navigate("/guest-page");
+      }
+    }
+  }, [userByPhoneNumber]);
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Success:", values);
-    navigate("/video-page");
+    getByPhoneNumber(values.phone);
+    setIsGoing(values.is_going);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -13,19 +47,18 @@ export default function Home() {
   };
 
   function validatePhoneNumber(rule, value, callback) {
-    const cleanedValue = value.replace(/\D/g, '');
+    const cleanedValue = value.replace(/\D/g, "");
     if (cleanedValue.length === 9) {
-
-      const validPrefixes = ['91', '92', '93', '96'];
+      const validPrefixes = ["91", "92", "93", "96"];
       const prefix = cleanedValue.slice(0, 2);
-  
+
       if (validPrefixes.includes(prefix)) {
         callback();
       } else {
-        callback('Please enter a valid Portuguese phone number.');
+        callback("Por favor inisra um numero de telemovel portugues");
       }
     } else {
-      callback('Por favor insira o seu numero de telemóvel válido.');
+      callback("Por favor insira o seu numero de telemóvel válido.");
     }
   }
   return (
@@ -35,22 +68,13 @@ export default function Home() {
           <h1 className="home_page_title">Confirme a sua presença</h1>
           <Form
             name="basic"
-            labelCol={{
-              span: 8,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 400,
-            }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <Form.Item
               label="Telemóvel"
-              name="number"
+              name="phone"
               rules={[
                 {
                   required: true,
@@ -65,12 +89,42 @@ export default function Home() {
               <Input />
             </Form.Item>
             <Form.Item
+              label="Vais ao nosso casamento?"
+              name="is_going"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Por favor insira o seu numero de telemovel antes de continuar",
+                },
+              ]}
+            >
+              <Select
+                defaultValue=""
+                style={{
+                  width: 120,
+                }}
+                options={[
+                  {
+                    value: false,
+                    label: "Não",
+                  },
+                  {
+                    value: true,
+                    label: "Sim",
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item
               wrapperCol={{
                 offset: 5,
                 span: 16,
               }}
             >
-              <ConfigProvider theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}>
+              <ConfigProvider
+                theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}
+              >
                 <Button type="primary" htmlType="submit" className="button">
                   Enviar Confirmação
                 </Button>

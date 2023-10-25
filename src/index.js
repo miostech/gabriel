@@ -3,7 +3,25 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { initializeApp } from "firebase/app";
+import { getFirestore} from "firebase/firestore";
+import { getAuth} from "firebase/auth";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBkWG-Q9ettoUkLwN_FAJYkL2EDTGd4aHw",
+  authDomain: "wedding-site-f9c38.firebaseapp.com",
+  projectId: "wedding-site-f9c38",
+  storageBucket: "wedding-site-f9c38.appspot.com",
+  messagingSenderId: "144948941422",
+  appId: "1:144948941422:web:6c71e33f4782193d74cc7f",
+  measurementId: "G-XXNR4NR8P9"
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const auth = getAuth(app);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
