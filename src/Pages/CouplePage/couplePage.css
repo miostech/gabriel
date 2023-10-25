@@ -1,8 +1,14 @@
 
+.countainer_couple{
+
+}
 .couple_page_box {
+
+  padding: 4rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+
+  flex-direction: row;
   gap: 10rem;
 }
 .couple_page_content {
@@ -19,4 +25,25 @@
 }
 .couple_page_title {
   text-align: center;
+}
+.guests_box{
+  border: 3px solid #5f021fd0;
+  background-color: rgba(255, 255, 255, 0.274);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  gap: 2rem;
+  border-radius: 24px;
+  margin: 1rem;
+}
+.countdownTimerContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.countdownTimer{
+    display: flex;
+    gap: 1rem;
+    font-weight: bolder;
 }

@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const [data, setData] = useState([]);
   const { signIn, error, setError } = useDataBaseContext();
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
@@ -17,6 +16,7 @@ export default function LoginPage() {
   const onSuccess = (values) => {
     console.log("Success:", values);
     signIn(values.email, values.password);
+
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -37,7 +37,6 @@ export default function LoginPage() {
         onFinish={onSuccess}
         onChange={() => setError("")}
         onFinishFailed={onFinishFailed}
-        autoComplete="off"
       >
         <Form.Item
           label="Email"
@@ -81,8 +80,8 @@ export default function LoginPage() {
       </Form>
       {error && (
         <>
-          <h3>Erro ao logar</h3>
-          <div>{error}</div>
+          <h3 style={{ color: "red" }}>Erro ao logar</h3>
+          <div style={{ color: "red" }}>{error}</div>
         </>
       )}
     </div>

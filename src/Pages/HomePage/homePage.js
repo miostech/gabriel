@@ -1,5 +1,5 @@
 import "./homePage.css";
-import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
+import { Button, Checkbox, ConfigProvider, Form, Input, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../index";
 import { useDataBaseContext } from "../../database/teste";
@@ -13,25 +13,33 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const { getByPhoneNumber, userByPhoneNumber } = useDataBaseContext();
+  const { getByPhoneNumber, userByPhoneNumber, updateGuest } =
+    useDataBaseContext();
+  const [isGoing, setIsGoing] = useState(null);
   useEffect(() => {
-    if (userByPhoneNumber.length > 0) {
+    if (userData) {
+      navigate("/guest-page");
+    } else if (userByPhoneNumber.length > 0) {
       console.log("InEffect", userByPhoneNumber);
+      console.log(isGoing);
+      updateGuest(userByPhoneNumber[0].id, isGoing);
       if (userData) {
         navigate("/guest-page");
       } else {
-        localStorage.setItem("userData", JSON.stringify(userByPhoneNumber));
+        localStorage.setItem("userData", JSON.stringify(userByPhoneNumber[0]));
+        navigate("/guest-page");
       }
     }
   }, [userByPhoneNumber]);
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Success:", values);
-    getByPhoneNumber(values.number);
+    getByPhoneNumber(values.phone);
+    setIsGoing(values.is_going);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -60,15 +68,6 @@ export default function Home() {
           <h1 className="home_page_title">Confirme a sua presença</h1>
           <Form
             name="basic"
-            labelCol={{
-              span: 8,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 400,
-            }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -88,6 +87,34 @@ export default function Home() {
               ]}
             >
               <Input />
+            </Form.Item>
+            <Form.Item
+              label="Vais ao nosso casamento?"
+              name="is_going"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "Por favor insira o seu numero de telemovel antes de continuar",
+                },
+              ]}
+            >
+              <Select
+                defaultValue=""
+                style={{
+                  width: 120,
+                }}
+                options={[
+                  {
+                    value: false,
+                    label: "Não",
+                  },
+                  {
+                    value: true,
+                    label: "Sim",
+                  },
+                ]}
+              />
             </Form.Item>
             <Form.Item
               wrapperCol={{

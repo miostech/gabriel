@@ -7,6 +7,7 @@ import {
   doc,
   query,
   where,
+  updateDoc,
   onSnapshot,
 } from "firebase/firestore";
 import {
@@ -34,23 +35,13 @@ export default function DataBaseProvider({ children }) {
         name: name,
         phone: phone,
         question: "",
+        is_confirmed: 0,
       });
       console.log("Usuário adicionado com ID:", docRef.id);
       return docRef.id; // Retorne o ID do documento criado (opcional)
     } catch (error) {
       console.error("Erro ao adicionar usuário:", error);
       throw error; // Você pode lançar o erro para lidar com ele posteriormente
-    }
-  };
-
-  const deleteUser = async (userId) => {
-    try {
-      const docRef = doc(db, "users", userId);
-      await deleteDoc(docRef);
-      console.log("Usuário deletado com ID:", userId);
-    } catch (error) {
-      console.error("Erro ao deletar usuário:", error);
-      throw error;
     }
   };
 
@@ -82,6 +73,7 @@ export default function DataBaseProvider({ children }) {
       setUserByPhoneNumber(docs);
       console.log("InDB", userByPhoneNumber);
     } catch (error) {
+      console.log(phoneNumber);
       console.error("Erro ao buscar os usuários:", error);
     }
   };
@@ -95,14 +87,35 @@ export default function DataBaseProvider({ children }) {
           email: auth.currentUser.email,
         };
         localStorage.setItem("coupleData", JSON.stringify(userLogedIn));
+        window.location.reload();
       }
     } catch (err) {
       console.error(err);
-      setError("Password ou email errado")
+      setError("Password ou email errado");
     }
   };
 
-  //Update User by id
+  const updateGuest = async (id, is_going) => {
+    try {
+      const docRef = doc(db, "users", id);
+      await updateDoc(docRef, { is_going: is_going, is_confirmed: 1 });
+      console.log("updatedYES!");
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const deleteUser = async (userId) => {
+    try {
+      const docRef = doc(db, "users", userId);
+      await deleteDoc(docRef);
+      console.log("Usuário deletado com ID:", userId);
+      getAllUsers();
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error);
+      throw error;
+    }
+  };
 
   const contextBoxValues = {
     addUser,
@@ -113,7 +126,8 @@ export default function DataBaseProvider({ children }) {
     userByPhoneNumber,
     signIn,
     error,
-    setError
+    setError,
+    updateGuest,
   };
 
   return (

@@ -1,17 +1,59 @@
 import "./couplePage.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import { useDataBaseContext } from "../../database/teste";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "antd/lib/form/Form";
 
 export default function CouplePage() {
-  const { addUser, usersAll, getAllUsers } = useDataBaseContext();
+  const { addUser, usersAll, getAllUsers, deleteUser } = useDataBaseContext();
+  const navigate = useNavigate();
+  const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
+  const [form] = Form.useForm();
+  const targetDate = new Date("2024-02-04T00:00:00").getTime();
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  function calculateTimeLeft() {
+    const currentDate = new Date().getTime();
+    const timeDifference = targetDate - currentDate;
+
+    if (timeDifference <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+      (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    return { days, hours, minutes, seconds };
+  }
   useEffect(() => {
-    getAllUsers();
-  }, []);
+    if (!loggedIn) {
+      navigate("/login");
+    } else {
+      getAllUsers();
+      const timer = setInterval(() => {
+        setTimeLeft(calculateTimeLeft());
+      }, 1000);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [form]);
+  const onReset = () => {
+    form.resetFields();
+  };
   function onFinish(values) {
     console.log(values);
     addUser(values.description, values.greatings, values.name, values.phone);
     getAllUsers();
+    form.resetFields();
   }
   function onFinishFailed(values) {
     console.log(values);
@@ -32,13 +74,23 @@ export default function CouplePage() {
     }
   }
   return (
-    <>
+    <div className="countainer_couple">
       <h2>Vamos convidar os nossos convidados!</h2>
+      <div className="countdownTimerContainer">
+        <h2>Countdown Timer</h2>
+        <div className="countdownTimer">
+          <div>{timeLeft.days} Dias</div>
+          <div>{timeLeft.hours} Horas</div>
+          <div>{timeLeft.minutes} Minutos</div>
+          <div>{timeLeft.seconds} Segundos</div>
+        </div>
+      </div>
       <div className="couple_page_box">
         <div className="couple_page_content">
           <Form
             name="basic"
             layout="vertical"
+            form={form}
             style={{
               maxWidth: 300,
             }}
@@ -97,12 +149,7 @@ export default function CouplePage() {
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 5,
-                span: 16,
-              }}
-            >
+            <Form.Item>
               <ConfigProvider
                 theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}
               >
@@ -111,21 +158,60 @@ export default function CouplePage() {
                 </Button>
               </ConfigProvider>
             </Form.Item>
+            <Form.Item>
+              <ConfigProvider
+                theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}
+              >
+                <Button type="primary" className="button" onClick={onReset}>
+                  Reset
+                </Button>
+              </ConfigProvider>
+            </Form.Item>
           </Form>
         </div>
         <div>
-          <div>
+          <div className="guests_container">
             <h1>Convidados</h1>
             <div>
               {usersAll.map((user) => (
-                <div key={user.id}>
-                  <div>{user.name}</div>
-                </div>
+                <>
+                  <div key={user.id} className="guests_box">
+                    <div>
+                      <div>
+                        <strong>Nome: </strong>
+                        {user.name}
+                      </div>
+                      <div>
+                        <strong>Telemovel: </strong>
+                        {user.phone}
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <strong>Descrição: </strong>
+                        {user.description}
+                      </div>
+                      <div>
+                        <strong>Boas Vindas: </strong>
+                        {user.greatings}
+                      </div>
+                    </div>
+                    <Button
+                      type="primary"
+                      className="button"
+                      onClick={() => {
+                        deleteUser(user.id);
+                      }}
+                    >
+                      Apagar Convidado
+                    </Button>
+                  </div>
+                </>
               ))}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
