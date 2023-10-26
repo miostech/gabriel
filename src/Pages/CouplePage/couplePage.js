@@ -2,7 +2,7 @@ import "./couplePage.css";
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import { useDataBaseContext } from "../../database/teste";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "antd/lib/form/Form";
 
 export default function CouplePage() {
@@ -10,7 +10,7 @@ export default function CouplePage() {
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
   const [form] = Form.useForm();
-  const targetDate = new Date("2024-02-04T00:00:00").getTime();
+  const targetDate = new Date("2024-02-04T16:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   function calculateTimeLeft() {
@@ -45,7 +45,7 @@ export default function CouplePage() {
         clearInterval(timer);
       };
     }
-  }, [form]);
+  }, [form, loggedIn]);
   const onReset = () => {
     form.resetFields();
   };
@@ -75,7 +75,6 @@ export default function CouplePage() {
   }
   return (
     <div className="countainer_couple">
-      <h2>Vamos convidar os nossos convidados!</h2>
       <div className="countdownTimerContainer">
         <h2>Countdown Timer</h2>
         <div className="countdownTimer">
@@ -171,7 +170,13 @@ export default function CouplePage() {
         </div>
         <div>
           <div className="guests_container">
-            <h1>Convidados</h1>
+            <div style={{display:"flex", alignItems:"center", gap:"1rem"}}>
+              <h1>Convidados</h1>
+              <Link to={"/allguests"}>
+                Ver Todos os Convidados Confirmados
+              </Link>
+            </div>
+
             <div>
               {usersAll.map((user) => (
                 <>

@@ -26,6 +26,10 @@
 .couple_page_title {
   text-align: center;
 }
+.guests_container{
+  max-height: 450px;
+  overflow: auto;
+}
 .guests_box{
   border: 3px solid #5f021fd0;
   background-color: rgba(255, 255, 255, 0.274);
@@ -34,13 +38,15 @@
   padding: 1rem;
   gap: 2rem;
   border-radius: 24px;
-  margin: 1rem;
+  margin-bottom: 1rem;
+
 }
 .countdownTimerContainer{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  
 }
 .countdownTimer{
     display: flex;

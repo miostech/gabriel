@@ -7,6 +7,7 @@ import LoginPage from "./Pages/LoginPage/loginPage";
 import DataBaseProvider from "./database/teste";
 import GuestPage from "./Pages/GuestPage/guestPage";
 import CouplePage from "./Pages/CouplePage/couplePage";
+import AllGuestsPage from "./Pages/AllGuestsPage/AllGuestsPage";
 function App() {
   return (
     <div className="body_main">
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<VideoPage />} />
             <Route path="/guest-page" element={<GuestPage />} />
             <Route path="/couple-page" element={<CouplePage />} />
+            <Route path="/allguests" element={<AllGuestsPage />} />
           </Routes>
         </BrowserRouter>
       </DataBaseProvider>
