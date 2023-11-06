@@ -17,11 +17,11 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const { getByPhoneNumber, userByPhoneNumber, updateGuest } =
+  const { getByPhoneNumber, userByPhoneNumber, updateGuest, error } =
     useDataBaseContext();
   const [isGoing, setIsGoing] = useState(null);
   useEffect(() => {
-    if (userData) {
+    /*  if (userData) {
       navigate("/guest-page");
     } else if (userByPhoneNumber.length > 0) {
       console.log("InEffect", userByPhoneNumber);
@@ -33,12 +33,24 @@ export default function Home() {
         localStorage.setItem("userData", JSON.stringify(userByPhoneNumber[0]));
         navigate("/guest-page");
       }
-    }
+    } */
   }, [userByPhoneNumber]);
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Success:", values);
-    getByPhoneNumber(values.phone);
+    getByPhoneNumber(values.phone)
+      .then((data) => {
+        console.log("inPromise", data[0]);
+        if(data.length > 0){
+          updateGuest(data[0].id, values.is_going);
+        }
+        localStorage.setItem("userData", JSON.stringify(data[0]));
+        navigate("/guest-page");
+      })
+      .catch((er) => {
+        console.log(er);
+        onFinishFailed(er);
+      });
     setIsGoing(values.is_going);
   };
 
@@ -131,6 +143,19 @@ export default function Home() {
               </ConfigProvider>
             </Form.Item>
           </Form>
+          {error && (
+            <div
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <h3 style={{ color: "red" }}>Erro ao inserir numero</h3>
+              <div style={{ color: "red" }}>{error}</div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -59,23 +59,28 @@ export default function DataBaseProvider({ children }) {
     }
   };
 
-  const getByPhoneNumber = async (phoneNumber) => {
-    try {
-      const queryPhoneNumber = query(
-        collectionRef,
-        where("phone", "==", phoneNumber)
-      );
-      const snapshot = await getDocs(queryPhoneNumber);
-      const docs = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setUserByPhoneNumber(docs);
-      console.log("InDB", userByPhoneNumber);
-    } catch (error) {
-      console.log(phoneNumber);
-      console.error("Erro ao buscar os usuários:", error);
-    }
+  const getByPhoneNumber = (phoneNumber) => {
+    return new Promise(async (resolve, reject) => {
+        const queryPhoneNumber = query(
+          collectionRef,
+          where("phone", "==", phoneNumber)
+        );
+        const snapshot = await getDocs(queryPhoneNumber);
+        console.log("snapshot",snapshot)
+        const docs = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        console.log(docs.length)
+        if(docs.length === 0){
+          reject("erro ao procurar o numero")
+          setError("erro ao procurar o numero")
+        }else{
+          resolve(docs)
+        }
+        
+        
+    });
   };
   const signIn = async (email, password) => {
     try {
