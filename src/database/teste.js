@@ -101,13 +101,14 @@ export default function DataBaseProvider({ children }) {
   };
 
   const updateGuest = async (id, is_going) => {
-    try {
+    return new Promise(async (resolve, reject) => {
       const docRef = doc(db, "users", id);
-      await updateDoc(docRef, { is_going: is_going, is_confirmed: 1 });
-      console.log("updatedYES!");
-    } catch (error) {
-      throw error;
-    }
+      await updateDoc(docRef, { is_going: is_going, is_confirmed: 1 }).then(()=>{
+        resolve("success")
+      }).catch(()=>{
+        reject("not updated")
+      })
+    })
   };
 
   const deleteUser = async (userId) => {

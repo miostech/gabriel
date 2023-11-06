@@ -42,10 +42,17 @@ export default function Home() {
       .then((data) => {
         console.log("inPromise", data[0]);
         if(data.length > 0){
-          updateGuest(data[0].id, values.is_going);
+          updateGuest(data[0].id, values.is_going).then(()=>{
+            getByPhoneNumber(values.phone).then((data)=>{
+              localStorage.setItem("userData", JSON.stringify(data[0]))
+            }).catch((er) => {
+              console.log(er);
+              onFinishFailed(er);
+            })
+          }).catch((er)=>{
+            onFinishFailed(er);
+          });
         }
-        localStorage.setItem("userData", JSON.stringify(data[0]));
-        navigate("/guest-page");
       })
       .catch((er) => {
         console.log(er);
