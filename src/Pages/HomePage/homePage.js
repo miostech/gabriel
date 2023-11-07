@@ -20,6 +20,7 @@ export default function Home() {
           updateGuest(data[0].id, values.is_going).then(()=>{
             getByPhoneNumber(values.phone).then((data)=>{
               localStorage.setItem("userData", JSON.stringify(data[0]))
+              navigate("/guest-page")
             }).catch((er) => {
               console.log(er);
               onFinishFailed(er);
