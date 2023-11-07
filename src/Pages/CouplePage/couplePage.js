@@ -37,7 +37,11 @@ export default function CouplePage() {
     if (!loggedIn) {
       navigate("/login");
     } else {
-      getAllUsers();
+      getAllUsers().then((data)=>{
+        setUsersAll(data)
+      }).catch((er)=>{
+        console.log(er)
+      });;
       const timer = setInterval(() => {
         setTimeLeft(calculateTimeLeft());
       }, 1000);
@@ -208,7 +212,13 @@ export default function CouplePage() {
                       type="primary"
                       className="button"
                       onClick={() => {
-                        deleteUser(user.id);
+                        deleteUser(user.id).then(()=>{
+                          getAllUsers().then((data)=>{
+                            setUsersAll(data)
+                          }).catch((er)=>{
+                            console.log(er)
+                          });
+                        });;
                       }}
                     >
                       Apagar Convidado

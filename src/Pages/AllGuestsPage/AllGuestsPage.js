@@ -60,7 +60,13 @@ export default function AllGuestsPage() {
                 type="primary"
                 className="button"
                 onClick={() => {
-                  deleteUser(user.id);
+                  deleteUser(user.id).then(()=>{
+                    getAllUsers().then((data)=>{
+                      setUsersAll(data)
+                    }).catch((er)=>{
+                      console.log(er)
+                    });
+                  });
                 }}
               >
                 Apagar Convidado

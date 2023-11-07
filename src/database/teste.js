@@ -113,15 +113,11 @@ export default function DataBaseProvider({ children }) {
   };
 
   const deleteUser = async (userId) => {
-    try {
+    return new Promise(async (resolve, reject) => {
       const docRef = doc(db, "users", userId);
       await deleteDoc(docRef);
-      console.log("Usuário deletado com ID:", userId);
-      getAllUsers();
-    } catch (error) {
-      console.error("Erro ao deletar usuário:", error);
-      throw error;
-    }
+      resolve("Usuário deletado com ID:", userId);
+    });
   };
 
   const contextBoxValues = {
