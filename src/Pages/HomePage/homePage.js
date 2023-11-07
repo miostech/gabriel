@@ -1,39 +1,14 @@
 import "./homePage.css";
 import { Button, Checkbox, ConfigProvider, Form, Input, Select } from "antd";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../index";
 import { useDataBaseContext } from "../../database/teste";
-import {
-  getDocs,
-  collection,
-  addDoc,
-  deleteDoc,
-  doc,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const { getByPhoneNumber, userByPhoneNumber, updateGuest, error } =
     useDataBaseContext();
-  const [isGoing, setIsGoing] = useState(null);
   useEffect(() => {
-    /*  if (userData) {
-      navigate("/guest-page");
-    } else if (userByPhoneNumber.length > 0) {
-      console.log("InEffect", userByPhoneNumber);
-      console.log(isGoing);
-      updateGuest(userByPhoneNumber[0].id, isGoing);
-      if (userData) {
-        navigate("/guest-page");
-      } else {
-        localStorage.setItem("userData", JSON.stringify(userByPhoneNumber[0]));
-        navigate("/guest-page");
-      }
-    } */
   }, [userByPhoneNumber]);
   const navigate = useNavigate();
   const onFinish = (values) => {
@@ -52,13 +27,14 @@ export default function Home() {
           }).catch((er)=>{
             onFinishFailed(er);
           });
+        } else {
+          onFinishFailed("Erro no servidor")
         }
       })
       .catch((er) => {
         console.log(er);
         onFinishFailed(er);
       });
-    setIsGoing(values.is_going);
   };
 
   const onFinishFailed = (errorInfo) => {
