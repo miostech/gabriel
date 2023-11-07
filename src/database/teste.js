@@ -46,40 +46,39 @@ export default function DataBaseProvider({ children }) {
   };
 
   const getAllUsers = async () => {
-    try {
+    return new Promise(async (resolve, reject) => {
       const data = await getDocs(collectionRef);
       const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setUsersAll(filteredData);
-    } catch (error) {
-      console.error("Erro ao buscar os usuários:", error);
-      throw error;
-    }
+      if (filteredData.length === 0) {
+        reject("erro ao procurar utilizadores ou nao existe");
+      } else {
+        resolve(filteredData);
+      }
+    });
   };
 
   const getByPhoneNumber = (phoneNumber) => {
     return new Promise(async (resolve, reject) => {
-        const queryPhoneNumber = query(
-          collectionRef,
-          where("phone", "==", phoneNumber)
-        );
-        const snapshot = await getDocs(queryPhoneNumber);
-        console.log("snapshot",snapshot)
-        const docs = snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        console.log(docs.length)
-        if(docs.length === 0){
-          reject("erro ao procurar o numero")
-          setError("erro ao procurar o numero")
-        }else{
-          resolve(docs)
-        }
-        
-        
+      const queryPhoneNumber = query(
+        collectionRef,
+        where("phone", "==", phoneNumber)
+      );
+      const snapshot = await getDocs(queryPhoneNumber);
+      console.log("snapshot", snapshot);
+      const docs = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      console.log(docs.length);
+      if (docs.length === 0) {
+        reject("erro ao procurar o numero");
+        setError("erro ao procurar o numero");
+      } else {
+        resolve(docs);
+      }
     });
   };
   const signIn = async (email, password) => {
@@ -103,12 +102,14 @@ export default function DataBaseProvider({ children }) {
   const updateGuest = async (id, is_going) => {
     return new Promise(async (resolve, reject) => {
       const docRef = doc(db, "users", id);
-      await updateDoc(docRef, { is_going: is_going, is_confirmed: 1 }).then(()=>{
-        resolve("success")
-      }).catch(()=>{
-        reject("not updated")
-      })
-    })
+      await updateDoc(docRef, { is_going: is_going, is_confirmed: 1 })
+        .then(() => {
+          resolve("success");
+        })
+        .catch(() => {
+          reject("not updated");
+        });
+    });
   };
 
   const deleteUser = async (userId) => {

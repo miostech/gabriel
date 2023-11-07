@@ -23,7 +23,7 @@ export default function GuestPage() {
   useEffect(() => {
     console.log(userData);
     if (!userData) {
-      navigate("/home-page")
+      navigate("/home-page");
     }
   }, [userData]);
 
@@ -51,10 +51,7 @@ export default function GuestPage() {
                       <p>I am the third Slide.</p>
                     </Slide>
                   </Slider>
-                  <ButtonNext className="button_back">
-                    {/* <img src={Right} width={50} height={50}/> */}Próximo
-                    Slide
-                  </ButtonNext>
+                  <ButtonNext className="button_back">Próximo Slide</ButtonNext>
                 </div>
               </CarouselProvider>
             </div>

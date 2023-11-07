@@ -1,19 +1,24 @@
 import "./AllGuestsPage.css";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDataBaseContext } from "../../database/teste";
 import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 
 export default function AllGuestsPage() {
-  const { usersAll, getAllUsers, deleteUser } = useDataBaseContext();
+  const { getAllUsers, deleteUser } = useDataBaseContext();
+  const [usersAll, setUsersAll] = useState([])
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
     } else {
-      getAllUsers();
+      getAllUsers().then((data)=>{
+        setUsersAll(data)
+      }).catch((er)=>{
+        console.log(er)
+      });
     }
   }, [loggedIn]);
   return (

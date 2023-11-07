@@ -6,9 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "antd/lib/form/Form";
 
 export default function CouplePage() {
-  const { addUser, usersAll, getAllUsers, deleteUser } = useDataBaseContext();
+  const { addUser, getAllUsers, deleteUser } = useDataBaseContext();
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
+  const [usersAll, setUsersAll] = useState([])
   const [form] = Form.useForm();
   const targetDate = new Date("2024-02-04T16:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -52,7 +53,11 @@ export default function CouplePage() {
   function onFinish(values) {
     console.log(values);
     addUser(values.description, values.greatings, values.name, values.phone);
-    getAllUsers();
+    getAllUsers().then((data)=>{
+      setUsersAll(data)
+    }).catch((er)=>{
+      console.log(er)
+    });
     form.resetFields();
   }
   function onFinishFailed(values) {
