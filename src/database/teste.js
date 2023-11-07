@@ -46,36 +46,40 @@ export default function DataBaseProvider({ children }) {
   };
 
   const getAllUsers = async () => {
-    try {
+    return new Promise(async (resolve, reject) => {
       const data = await getDocs(collectionRef);
       const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setUsersAll(filteredData);
-    } catch (error) {
-      console.error("Erro ao buscar os usuários:", error);
-      throw error;
-    }
+      if (filteredData.length === 0) {
+        reject("erro ao procurar utilizadores ou nao existe");
+      } else {
+        resolve(filteredData);
+      }
+    });
   };
 
-  const getByPhoneNumber = async (phoneNumber) => {
-    try {
+  const getByPhoneNumber = (phoneNumber) => {
+    return new Promise(async (resolve, reject) => {
       const queryPhoneNumber = query(
         collectionRef,
         where("phone", "==", phoneNumber)
       );
       const snapshot = await getDocs(queryPhoneNumber);
+      console.log("snapshot", snapshot);
       const docs = snapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setUserByPhoneNumber(docs);
-      console.log("InDB", userByPhoneNumber);
-    } catch (error) {
-      console.log(phoneNumber);
-      console.error("Erro ao buscar os usuários:", error);
-    }
+      console.log(docs.length);
+      if (docs.length === 0) {
+        reject("erro ao procurar o numero");
+        setError("erro ao procurar o numero");
+      } else {
+        resolve(docs);
+      }
+    });
   };
   const signIn = async (email, password) => {
     try {
@@ -96,25 +100,24 @@ export default function DataBaseProvider({ children }) {
   };
 
   const updateGuest = async (id, is_going) => {
-    try {
+    return new Promise(async (resolve, reject) => {
       const docRef = doc(db, "users", id);
-      await updateDoc(docRef, { is_going: is_going, is_confirmed: 1 });
-      console.log("updatedYES!");
-    } catch (error) {
-      throw error;
-    }
+      await updateDoc(docRef, { is_going: is_going, is_confirmed: 1 })
+        .then(() => {
+          resolve("success");
+        })
+        .catch(() => {
+          reject("not updated");
+        });
+    });
   };
 
   const deleteUser = async (userId) => {
-    try {
+    return new Promise(async (resolve, reject) => {
       const docRef = doc(db, "users", userId);
       await deleteDoc(docRef);
-      console.log("Usuário deletado com ID:", userId);
-      getAllUsers();
-    } catch (error) {
-      console.error("Erro ao deletar usuário:", error);
-      throw error;
-    }
+      resolve("Usuário deletado com ID:", userId);
+    });
   };
 
   const contextBoxValues = {

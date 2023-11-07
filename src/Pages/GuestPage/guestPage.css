@@ -1,0 +1,33 @@
+.main_container_guest {
+  position: relative;
+  display: flex;
+  margin-top: 10vh;
+  height: 70vh;
+  overflow: hidden;
+}
+.guest_box {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+.guest_info {
+   height: 100%;
+}
+.carousel_container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  padding: 10px;
+  
+}
+.carousel_slider {
+}
+.button_back{
+  background: #5f021fd0;
+  border-radius: 24px;
+  padding: 1rem;
+  color: white;
+  margin-left: 20%;
+  font-size: larger;
+  border: none;
+}

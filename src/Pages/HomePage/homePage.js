@@ -1,45 +1,40 @@
 import "./homePage.css";
 import { Button, Checkbox, ConfigProvider, Form, Input, Select } from "antd";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../index";
 import { useDataBaseContext } from "../../database/teste";
-import {
-  getDocs,
-  collection,
-  addDoc,
-  deleteDoc,
-  doc,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const { getByPhoneNumber, userByPhoneNumber, updateGuest } =
+  const { getByPhoneNumber, userByPhoneNumber, updateGuest, error } =
     useDataBaseContext();
-  const [isGoing, setIsGoing] = useState(null);
   useEffect(() => {
-    if (userData) {
-      navigate("/guest-page");
-    } else if (userByPhoneNumber.length > 0) {
-      console.log("InEffect", userByPhoneNumber);
-      console.log(isGoing);
-      updateGuest(userByPhoneNumber[0].id, isGoing);
-      if (userData) {
-        navigate("/guest-page");
-      } else {
-        localStorage.setItem("userData", JSON.stringify(userByPhoneNumber[0]));
-        navigate("/guest-page");
-      }
-    }
   }, [userByPhoneNumber]);
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Success:", values);
-    getByPhoneNumber(values.phone);
-    setIsGoing(values.is_going);
+    getByPhoneNumber(values.phone)
+      .then((data) => {
+        console.log("inPromise", data[0]);
+        if(data.length > 0){
+          updateGuest(data[0].id, values.is_going).then(()=>{
+            getByPhoneNumber(values.phone).then((data)=>{
+              localStorage.setItem("userData", JSON.stringify(data[0]))
+            }).catch((er) => {
+              console.log(er);
+              onFinishFailed(er);
+            })
+          }).catch((er)=>{
+            onFinishFailed(er);
+          });
+        } else {
+          onFinishFailed("Erro no servidor")
+        }
+      })
+      .catch((er) => {
+        console.log(er);
+        onFinishFailed(er);
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -131,6 +126,19 @@ export default function Home() {
               </ConfigProvider>
             </Form.Item>
           </Form>
+          {error && (
+            <div
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <h3 style={{ color: "red" }}>Erro ao inserir numero</h3>
+              <div style={{ color: "red" }}>{error}</div>
+            </div>
+          )}
         </div>
       </div>
     </div>
