@@ -9,7 +9,10 @@ export default function Home() {
   const { getByPhoneNumber, userByPhoneNumber, updateGuest, error } =
     useDataBaseContext();
   useEffect(() => {
-  }, [userByPhoneNumber]);
+    if(userData){
+      navigate("guest-page")
+    }
+  }, [userData]);
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Success:", values);
