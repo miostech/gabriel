@@ -9,7 +9,7 @@ export default function CouplePage() {
   const { addUser, getAllUsers, deleteUser } = useDataBaseContext();
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
-  const [usersAll, setUsersAll] = useState([])
+  const [usersAll, setUsersAll] = useState([]);
   const [form] = Form.useForm();
   const targetDate = new Date("2024-02-04T16:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -36,32 +36,33 @@ export default function CouplePage() {
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
-    } else {
-      getAllUsers().then((data)=>{
-        setUsersAll(data)
-      }).catch((er)=>{
-        console.log(er)
-      });;
-      const timer = setInterval(() => {
-        setTimeLeft(calculateTimeLeft());
-      }, 1000);
-
-      return () => {
-        clearInterval(timer);
-      };
     }
-  }, [form, loggedIn]);
+  }, [form]);
+  useEffect(() => {
+    getAllUsers()
+      .then((data) => {
+        setUsersAll(data);
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+    setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+  }, [calculateTimeLeft]);
   const onReset = () => {
     form.resetFields();
   };
   function onFinish(values) {
     console.log(values);
     addUser(values.description, values.greatings, values.name, values.phone);
-    getAllUsers().then((data)=>{
-      setUsersAll(data)
-    }).catch((er)=>{
-      console.log(er)
-    });
+    getAllUsers()
+      .then((data) => {
+        setUsersAll(data);
+      })
+      .catch((er) => {
+        console.log(er);
+      });
     form.resetFields();
   }
   function onFinishFailed(values) {
@@ -212,13 +213,15 @@ export default function CouplePage() {
                       type="primary"
                       className="button"
                       onClick={() => {
-                        deleteUser(user.id).then(()=>{
-                          getAllUsers().then((data)=>{
-                            setUsersAll(data)
-                          }).catch((er)=>{
-                            console.log(er)
-                          });
-                        });;
+                        deleteUser(user.id).then(() => {
+                          getAllUsers()
+                            .then((data) => {
+                              setUsersAll(data);
+                            })
+                            .catch((er) => {
+                              console.log(er);
+                            });
+                        });
                       }}
                     >
                       Apagar Convidado

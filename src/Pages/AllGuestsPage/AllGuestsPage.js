@@ -7,20 +7,23 @@ import { Button } from "antd";
 
 export default function AllGuestsPage() {
   const { getAllUsers, deleteUser } = useDataBaseContext();
-  const [usersAll, setUsersAll] = useState([])
+  const [usersAll, setUsersAll] = useState([]);
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("coupleData"));
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
-    } else {
-      getAllUsers().then((data)=>{
-        setUsersAll(data)
-      }).catch((er)=>{
-        console.log(er)
-      });
     }
   }, [loggedIn]);
+  useEffect(() => {
+    getAllUsers()
+      .then((data) => {
+        setUsersAll(data);
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  }, []);
   return (
     <div className="guests_container">
       <h1>Convidados</h1>
@@ -60,12 +63,14 @@ export default function AllGuestsPage() {
                 type="primary"
                 className="button"
                 onClick={() => {
-                  deleteUser(user.id).then(()=>{
-                    getAllUsers().then((data)=>{
-                      setUsersAll(data)
-                    }).catch((er)=>{
-                      console.log(er)
-                    });
+                  deleteUser(user.id).then(() => {
+                    getAllUsers()
+                      .then((data) => {
+                        setUsersAll(data);
+                      })
+                      .catch((er) => {
+                        console.log(er);
+                      });
                   });
                 }}
               >

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const { getByPhoneNumber, userByPhoneNumber, updateGuest, error } =
+  const { getByPhoneNumber, updateGuest, error } =
     useDataBaseContext();
   useEffect(() => {
     if(userData){

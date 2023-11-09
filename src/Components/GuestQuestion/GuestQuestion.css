@@ -1,0 +1,16 @@
+.countdownTimerContainerGuest{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.countdownTimerContainerGuest h2{
+    margin: 0;
+    padding: 0;
+}
+.countdownTimerGuest{
+    display: flex;
+    margin-top: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 60vw;
+}

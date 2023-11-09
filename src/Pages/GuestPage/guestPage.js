@@ -14,6 +14,7 @@ import GuestSchedule from "../../Components/GuestSchedule/GuestSchedule";
 import { RightCircleTwoTone, RightOutlined } from "@ant-design/icons";
 import Right from "../../Images/angle-circle-right.png";
 import { useNavigate } from "react-router-dom";
+import GuestQuestion from "../../Components/GuestQuestion/GuestQuestion";
 
 export default function GuestPage() {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -48,7 +49,7 @@ export default function GuestPage() {
                       <GuestSchedule />
                     </Slide>
                     <Slide index={2}>
-                      <p>I am the third Slide.</p>
+                      <GuestQuestion />
                     </Slide>
                   </Slider>
                   <ButtonNext className="button_back">Próximo Slide</ButtonNext>
