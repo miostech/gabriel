@@ -1,6 +1,7 @@
 import React from "react";
-import "./GuestInfo.css"
-
+import "./GuestInfo.css";
+import Lottie from "lottie-react";
+import arrow from "./Animation-1699719932589.json";
 export default function GuestInfo({ userData }) {
   return (
     <div className="guest_info">
@@ -16,6 +17,9 @@ export default function GuestInfo({ userData }) {
       <br></br>
       <text>Se quiseres saber o que vai acontecer</text>
       <text>faz scroll para a direita!</text>
+      <div>
+        <Lottie animationData={arrow} style={{position:"absolute", top:150}}/>
+      </div>
     </div>
   );
 }
