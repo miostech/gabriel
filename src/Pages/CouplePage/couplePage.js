@@ -183,6 +183,7 @@ export default function CouplePage() {
             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <h1>Convidados</h1>
               <Link to={"/allguests"}>Ver Todos os Convidados Confirmados</Link>
+              <Link to={"/allquestions"}>Ver Todos as Perguntas!</Link>
             </div>
 
             <div>

@@ -112,6 +112,32 @@ export default function DataBaseProvider({ children }) {
     });
   };
 
+  const addQuestion = async (id, question) => {
+    return new Promise(async (resolve, reject) => {
+      const docRef = doc(db, "users", id);
+      await updateDoc(docRef, { question: question })
+        .then(() => {
+          resolve("success");
+        })
+        .catch(() => {
+          reject("not updated");
+        });
+    });
+  };
+
+  const deleteQuestion = async (id) => {
+    return new Promise(async (resolve, reject) => {
+      const docRef = doc(db, "users", id);
+      await updateDoc(docRef, { question: "" })
+        .then(() => {
+          resolve("success");
+        })
+        .catch(() => {
+          reject("not updated");
+        });
+    });
+  };
+
   const deleteUser = async (userId) => {
     return new Promise(async (resolve, reject) => {
       const docRef = doc(db, "users", userId);
@@ -131,6 +157,8 @@ export default function DataBaseProvider({ children }) {
     error,
     setError,
     updateGuest,
+    addQuestion,
+    deleteQuestion
   };
 
   return (

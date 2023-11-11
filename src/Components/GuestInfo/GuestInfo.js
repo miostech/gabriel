@@ -1,20 +1,21 @@
 import React from "react";
+import "./GuestInfo.css"
 
 export default function GuestInfo({ userData }) {
   return (
     <div className="guest_info">
-      <div>Olá {userData.name}!</div>
-      <div>{userData.greatings}</div>
-      <div>{userData.description}</div>
+      <text>Olá {userData.name}!</text>
+      <text>{userData.greatings}</text>
+      <text>{userData.description}</text>
       <br></br>
-      <div>Bem vindo! </div>
-      <div>Ao nosso site de casamento!</div>
+      <text>Bem vindo! </text>
+      <text>Ao nosso site de casamento!</text>
       <br></br>
-      <div>Obrigado por aceitares </div>
-      <div>o nosso convite {userData.name} 😀</div>
+      <text>Obrigado por aceitares </text>
+      <text>o nosso convite {userData.name} 😀</text>
       <br></br>
-      <div>Se quiseres saber o que vai acontecer</div>
-      <div>faz scroll para a direita!</div>
+      <text>Se quiseres saber o que vai acontecer</text>
+      <text>faz scroll para a direita!</text>
     </div>
   );
 }

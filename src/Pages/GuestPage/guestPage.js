@@ -24,7 +24,7 @@ export default function GuestPage() {
   useEffect(() => {
     console.log(userData);
     if (!userData) {
-      navigate("/home-page");
+      navigate("/");
     }
   }, [userData]);
 
@@ -35,10 +35,13 @@ export default function GuestPage() {
           <div className="guest_box">
             <div className="carousel_container">
               <CarouselProvider
-                naturalSlideWidth={100}
-                naturalSlideHeight={90}
+                naturalSlideWidth={10}
+                naturalSlideHeight={10}
                 totalSlides={3}
                 orientation="horizontal"
+                disableKeyboard={false}
+                preventVerticalScrollOnTouch
+                lockOnWindowScroll
               >
                 <div className="carousel_box">
                   <Slider className="carousel_slider">
@@ -52,7 +55,6 @@ export default function GuestPage() {
                       <GuestQuestion />
                     </Slide>
                   </Slider>
-                  <ButtonNext className="button_back">Próximo Slide</ButtonNext>
                 </div>
               </CarouselProvider>
             </div>

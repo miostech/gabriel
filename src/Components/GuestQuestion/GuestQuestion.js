@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
+import { useNavigate } from "react-router-dom";
+
 import "./GuestQuestion.css";
 
 export default function GuestQuestion() {
   const targetDate = new Date("2024-02-04T16:00:00").getTime();
-  const [form] = Form.useForm();
+
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const onReset = () => {
-    form.resetFields();
-  };
-  function onFinish(values) {
-    console.log(values);
-    
-    form.resetFields();
-  }
-  function onFinishFailed(values) {
-    console.log(values);
-  }
+  const navigate = useNavigate();
 
   function calculateTimeLeft() {
     const currentDate = new Date().getTime();
@@ -41,7 +32,7 @@ export default function GuestQuestion() {
     setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
-  }, [calculateTimeLeft, form]);
+  }, [calculateTimeLeft]);
   return (
     <div>
       <div className="countdownTimerContainerGuest">
@@ -54,7 +45,17 @@ export default function GuestQuestion() {
           <div>{timeLeft.seconds} Segundos</div>
         </div>
       </div>
-      
+      <div className="guest_page_question_container">
+        <button
+          className="button_question"
+          onClick={() => {
+            console.log("clik");
+            navigate("/question");
+          }}
+        >
+          Entra no nosso jogo!
+        </button>
+      </div>
     </div>
   );
 }

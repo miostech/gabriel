@@ -1,0 +1,11 @@
+.guest_info{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+}
+.guest_info text{
+    text-wrap: wrap;
+    inline-size:70%;
+}

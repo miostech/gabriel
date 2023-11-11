@@ -14,3 +14,12 @@
     flex-wrap: wrap;
     max-width: 60vw;
 }
+.button_question{
+    background: #5f021fd0;
+    border-radius: 24px;
+    padding: 1rem;
+    color: white;
+    margin-top: 1rem;
+    font-size: larger;
+    border: none;
+  }

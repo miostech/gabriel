@@ -9,12 +9,11 @@ export default function GuestSchedule() {
         <div>Cerimonia</div>
       </div>
       <div className="schedule_item">
-        <div className="schedule_hours">17:00 - 17:30</div>
-        <div>Jogos e surpresas</div>
-      </div>
-      <div className="schedule_item">
-        <div className="schedule_hours">18:00 - 19:00</div>
-        <div>Convivio</div>
+        <div className="schedule_hours">17:00 - 19:00</div>
+        <div>
+          <div>Jogos, surpresas e </div>
+          <div>convivio </div>
+        </div>
       </div>
       <div className="schedule_item">
         <div className="schedule_hours">19:00</div>

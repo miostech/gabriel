@@ -6,7 +6,9 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 2rem;
+    inline-size: 75%;
     gap: 1rem;
+    align-items: center;
 }
 .schedule_hours{
     background-color: #5f021f;

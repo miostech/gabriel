@@ -1,43 +1,53 @@
 import "./homePage.css";
 import { Button, Checkbox, ConfigProvider, Form, Input, Select } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useDataBaseContext } from "../../database/teste";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const { getByPhoneNumber, updateGuest, error } =
-    useDataBaseContext();
+  const [loading, setLoading] = useState(false)
+  const { getByPhoneNumber, updateGuest, error } = useDataBaseContext();
   useEffect(() => {
-    if(userData){
-      navigate("guest-page")
+    if (userData) {
+      navigate("guest-page");
     }
   }, [userData]);
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Success:", values);
+    setLoading(true)
     getByPhoneNumber(values.phone)
       .then((data) => {
         console.log("inPromise", data[0]);
-        if(data.length > 0){
-          updateGuest(data[0].id, values.is_going).then(()=>{
-            getByPhoneNumber(values.phone).then((data)=>{
-              localStorage.setItem("userData", JSON.stringify(data[0]))
-              navigate("/guest-page")
-            }).catch((er) => {
-              console.log(er);
-              onFinishFailed(er);
+        if (data.length > 0) {
+          updateGuest(data[0].id, values.is_going)
+            .then(() => {
+              getByPhoneNumber(values.phone)
+                .then((data) => {
+                  localStorage.setItem("userData", JSON.stringify(data[0]));
+                  navigate("/guest-page");
+                })
+                .catch((er) => {
+                  console.log(er);
+                  onFinishFailed(er);
+                  setLoading(false)
+                });
             })
-          }).catch((er)=>{
-            onFinishFailed(er);
-          });
+            .catch((er) => {
+              onFinishFailed(er);
+              setLoading(false)
+            });
         } else {
-          onFinishFailed("Erro no servidor")
+          onFinishFailed("Erro no servidor");
+          setLoading(false)
         }
       })
       .catch((er) => {
         console.log(er);
         onFinishFailed(er);
+        setLoading(false)
       });
   };
 
@@ -124,8 +134,8 @@ export default function Home() {
               <ConfigProvider
                 theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}
               >
-                <Button type="primary" htmlType="submit" className="button">
-                  Enviar Confirmação
+                <Button type="primary" htmlType="submit" className="button" disabled={loading}>
+                  {loading ? <LoadingOutlined /> : "Enviar Confirmação"}
                 </Button>
               </ConfigProvider>
             </Form.Item>
