@@ -5,19 +5,11 @@ import {
   CarouselProvider,
   Slider,
   Slide,
-  ButtonBack,
-  ButtonNext,
-  DotGroup,
 } from "pure-react-carousel";
 import GuestInfo from "../../Components/GuestInfo/GuestInfo";
 import GuestSchedule from "../../Components/GuestSchedule/GuestSchedule";
-import { RightCircleTwoTone, RightOutlined } from "@ant-design/icons";
-import Right from "../../Images/angle-circle-right.png";
-import GifPlayer from 'react-gif-player';
 import { useNavigate } from "react-router-dom";
 import GuestQuestion from "../../Components/GuestQuestion/GuestQuestion";
-import Lottie from "lottie-react";
-import arrow from "./Animation-1699719932589.json";
 export default function GuestPage() {
   const userData = JSON.parse(localStorage.getItem("userData"));
 
@@ -38,7 +30,7 @@ export default function GuestPage() {
             <div className="carousel_container">
               <CarouselProvider
                 naturalSlideWidth={10}
-                naturalSlideHeight={50}
+                naturalSlideHeight={100}
                 totalSlides={3}
                 orientation="horizontal"
                 disableKeyboard={false}

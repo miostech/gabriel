@@ -71,15 +71,18 @@ export default function QuestionPage() {
     <>
       <div className="question_container">
         <div>
-          <button
-            className="button_question"
-            onClick={() => {
-              console.log("clik");
-              navigate("/guest-page");
-            }}
-          >
-            Volta para a Pagina Principal
-          </button>
+          <ConfigProvider theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}>
+            <Button
+              type="primary"
+              className="button"
+              disabled={loading}
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Ir para a pagina principal
+            </Button>
+          </ConfigProvider>
           <p>Bem-vindo á pagina da tua pergunta!</p>{" "}
           <p>
             Aqui podes mandar-nos a tua pergunta bem como veres e apagares a tua
@@ -91,15 +94,20 @@ export default function QuestionPage() {
           <div>
             <div className="question_page_box">
               <p>{userData.question}</p>
-              <button
-                onClick={() =>
-                  deleteQuestionInPage(userData.id, userData.phone)
-                }
-                className="button_question_page"
-                disabled={loading}
+              <ConfigProvider
+                theme={{ token: { colorPrimaryHover: "#5f021fd0" } }}
               >
-                {loading ? <LoadingOutlined /> : "Apagar Pergunta"}
-              </button>
+                <Button
+                  type="primary"
+                  className="button"
+                  disabled={loading}
+                  onClick={() => {
+                    deleteQuestionInPage(userData.id, userData.phone);
+                  }}
+                >
+                  {loading ? <LoadingOutlined /> : "Apagar Pergunta"}
+                </Button>
+              </ConfigProvider>
             </div>
           </div>
         ) : (

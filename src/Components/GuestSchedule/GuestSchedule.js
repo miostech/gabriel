@@ -1,5 +1,7 @@
 import React from "react";
 import "./GuestSchedule.css";
+import Lottie from "lottie-react";
+import arrow from "./Animation-1699719932589.json";
 
 export default function GuestSchedule() {
   return (
@@ -22,6 +24,9 @@ export default function GuestSchedule() {
       <div className="schedule_item">
         <div className="schedule_hours">19:30 - 22:30</div>
         <div>Copo de água</div>
+      </div>
+      <div>
+        <Lottie animationData={arrow} style={{position:"absolute", top:150}}/>
       </div>
     </div>
   );
