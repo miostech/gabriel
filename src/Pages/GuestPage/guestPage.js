@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
 import "./guestPage.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-} from "pure-react-carousel";
+import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
 import GuestInfo from "../../Components/GuestInfo/GuestInfo";
 import GuestSchedule from "../../Components/GuestSchedule/GuestSchedule";
 import { useNavigate } from "react-router-dom";
 import GuestQuestion from "../../Components/GuestQuestion/GuestQuestion";
+import { useDataBaseContext } from "../../database/teste";
 export default function GuestPage() {
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const { getByPhoneNumber, updateGuest, error } = useDataBaseContext();
 
   const navigate = useNavigate();
 
@@ -20,6 +18,14 @@ export default function GuestPage() {
     if (!userData) {
       navigate("/");
     }
+  }, [userData]);
+
+  useEffect(() => {
+    getByPhoneNumber(userData.phone)
+      .then()
+      .catch(() => {
+        localStorage.removeItem("userData");
+      });
   }, [userData]);
 
   return (
@@ -49,17 +55,13 @@ export default function GuestPage() {
                       <GuestQuestion />
                     </Slide>
                   </Slider>
-                  
                 </div>
-                
               </CarouselProvider>
-              
             </div>
-            
           </div>
         </div>
       ) : (
-        <div>
+        <div className="home_page_container">
           <div>Que pena não poderes ir {userData?.name} 😕</div>
         </div>
       )}

@@ -80,14 +80,17 @@ export default function QuestionPage() {
                 navigate("/");
               }}
             >
-              Ir para a pagina principal
+              Ir para a página principal
             </Button>
           </ConfigProvider>
-          <p>Bem-vindo á pagina da tua pergunta!</p>{" "}
           <p>
-            Aqui podes mandar-nos a tua pergunta bem como veres e apagares a tua
-            pergunta. A tua pergunta vai ser lida para todos portanto não és
-            obrigado a participares neste jogo, {userData.name} 😀
+            Bem-vindo à página onde podes colocar a pergunta queres fazer aos
+            noivos!
+          </p>
+          <p>
+            Aqui podes mandar-nos a tua pergunta, bem como a veres e apagares.
+            Ela vai ser lida depois da cerimónia para todos, portanto não és
+            obrigado a participar neste jogo, {userData.name} 😀
           </p>
         </div>
         {userData.question ? (
@@ -118,10 +121,13 @@ export default function QuestionPage() {
             autoComplete="off"
           >
             <Form.Item
-              label="Poe aqui a tua pergunta!"
+              label="Põe aqui a tua pergunta!"
               name="question"
               rules={[
-                { required: true, message: "Please input your username!" },
+                {
+                  required: true,
+                  message: "Por favor insere primeiro a tua pergunta",
+                },
               ]}
             >
               <Input />
@@ -141,7 +147,7 @@ export default function QuestionPage() {
                   className="button"
                   disabled={loading}
                 >
-                  {loading ? <LoadingOutlined /> : "Enviar Confirmação"}
+                  {loading ? <LoadingOutlined /> : "Enviar Pergunta"}
                 </Button>
               </ConfigProvider>
             </Form.Item>
