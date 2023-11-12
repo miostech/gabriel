@@ -58,7 +58,7 @@ export default function Home() {
   function validatePhoneNumber(rule, value, callback) {
     const cleanedValue = value.replace(/\D/g, "");
     if (cleanedValue.length === 9) {
-      const validPrefixes = ["91", "92", "93", "96"];
+      const validPrefixes = ["91", "92", "93", "96", "66"];
       const prefix = cleanedValue.slice(0, 2);
 
       if (validPrefixes.includes(prefix)) {
