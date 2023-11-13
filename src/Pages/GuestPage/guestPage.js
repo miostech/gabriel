@@ -61,7 +61,7 @@ export default function GuestPage() {
           </div>
         </div>
       ) : (
-        <div className="home_page_container">
+        <div className="question_container">
           <div>Que pena não poderes ir {userData?.name} 😕</div>
         </div>
       )}
