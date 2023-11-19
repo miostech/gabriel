@@ -26,7 +26,14 @@ export default function GuestSchedule() {
         <div>Copo-d'água</div>
       </div>
       <div>
-        <Lottie animationData={arrow} style={{position:"absolute", top:150}}/>
+        <Lottie
+          animationData={arrow}
+          style={{
+            position: "absolute",
+            top: 150,
+            transform: "rotate(180deg)",
+          }}
+        />
       </div>
     </div>
   );

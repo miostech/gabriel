@@ -11,7 +11,7 @@ export default function Home() {
   const { getByPhoneNumber, updateGuest, error } = useDataBaseContext();
   useEffect(() => {
     if (userData) {
-      navigate("guest-page");
+      navigate("/guest-page");
     }
   }, [userData]);
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function Home() {
               getByPhoneNumber(values.phone)
                 .then((data) => {
                   localStorage.setItem("userData", JSON.stringify(data[0]));
-                  navigate("/guest-page");
+                  navigate("/video");
                 })
                 .catch((er) => {
                   console.log(er);
