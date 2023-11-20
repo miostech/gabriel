@@ -39,6 +39,11 @@ export default function CouplePage() {
     }
   }, [form]);
   useEffect(() => {
+    setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+  }, [calculateTimeLeft]);
+  useEffect(() => {
     getAllUsers()
       .then((data) => {
         setUsersAll(data);
@@ -46,10 +51,8 @@ export default function CouplePage() {
       .catch((er) => {
         console.log(er);
       });
-    setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-  }, [calculateTimeLeft]);
+  }, []);
+
   const onReset = () => {
     form.resetFields();
   };
