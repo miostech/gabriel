@@ -16,9 +16,16 @@ export default function GuestInfo({ userData }) {
       <text>o nosso convite {userData.name} 😀</text>
       <br></br>
       <text>Se quiseres saber o que vai acontecer</text>
-      <text>faz scroll para a direita!</text>
+      <text>faz scroll para a esquerda!</text>
       <div>
-        <Lottie animationData={arrow} style={{position:"absolute", top:150}}/>
+        <Lottie
+          animationData={arrow}
+          style={{
+            position: "absolute",
+            top: 150,
+            transform: "rotate(180deg)",
+          }}
+        />
       </div>
     </div>
   );
