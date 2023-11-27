@@ -2,15 +2,16 @@
   display: flex;
   max-height: 500px;
   overflow: auto;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+  margin-top: 1rem;
 }
 .question_guests_box {
   border: 3px solid #5f021fd0;
   background-color: rgba(255, 255, 255, 0.274);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1rem;
   gap: 2rem;
   border-radius: 24px;
