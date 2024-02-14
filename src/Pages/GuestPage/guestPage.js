@@ -32,37 +32,15 @@ export default function GuestPage() {
     <>
       {userData?.is_going === true ? (
         <div className="main_container_guest">
-          <div className="guest_box">
-            <div className="carousel_container">
-              <CarouselProvider
-                naturalSlideWidth={10}
-                naturalSlideHeight={100}
-                totalSlides={3}
-                orientation="horizontal"
-                disableKeyboard={false}
-                preventVerticalScrollOnTouch
-                lockOnWindowScroll
-              >
-                <div className="carousel_box">
-                  <Slider className="carousel_slider">
-                    <Slide index={0}>
-                      <GuestInfo userData={userData} />
-                    </Slide>
-                    <Slide index={1}>
-                      <GuestSchedule />
-                    </Slide>
-                    <Slide index={2}>
-                      <GuestQuestion />
-                    </Slide>
-                  </Slider>
-                </div>
-              </CarouselProvider>
-            </div>
-          </div>
+          <GuestInfo userData={userData} />
         </div>
       ) : (
-        <div className="question_container">
-          <div>Que pena não poderes ir {userData?.name} 😕</div>
+        <div className="main_container_guest">
+          <div className="guest_box">
+            <div className="carousel_container">
+              <GuestInfo userData={userData} />
+            </div>
+          </div>
         </div>
       )}
     </>

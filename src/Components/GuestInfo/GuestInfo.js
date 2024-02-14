@@ -6,27 +6,17 @@ export default function GuestInfo({ userData }) {
   return (
     <div className="guest_info">
       <text>Olá {userData.name}!</text>
-      <text>{userData.greatings}</text>
-      <text>{userData.description}</text>
       <br></br>
-      <text>Bem vindo! </text>
-      <text>Ao nosso site de casamento!</text>
+      <text>
+        Para veres as fotografias de casamento{" "}
+        <a href="https://photos.google.com/share/AF1QipMCc5mmcJNjVvD9UFTw1KnW_-MGJ5uUvX71Xvz6E49ptKONUyad0HcAsQ_4NmmRNQ?key=N3BtYXVoX01QazZpVUlhaVhMSGFTelhhZU5lNnh3">
+          clica aqui!
+        </a>
+      </text>
       <br></br>
-      <text>Obrigado por aceitares </text>
-      <text>o nosso convite {userData.name} 😀</text>
+      <text>Obrigado por vires </text>
+      <text>ao nosso casamento, {userData.name} 😀</text>
       <br></br>
-      <text>Se quiseres saber o que vai acontecer</text>
-      <text>faz scroll para a esquerda!</text>
-      <div>
-        <Lottie
-          animationData={arrow}
-          style={{
-            position: "absolute",
-            top: 150,
-            transform: "rotate(180deg)",
-          }}
-        />
-      </div>
     </div>
   );
 }
